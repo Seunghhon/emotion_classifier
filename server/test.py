@@ -1,0 +1,134 @@
+from cv2 import dft
+
+
+class maneger():
+    def __init__(self):
+        from PIL import Image, ImageFont, ImageDraw
+        import os
+        import argparse
+        import cv2
+        import numpy as np
+        import torch
+        import torch.nn as nn
+        import torch.nn.functional as F
+        import torchvision.transforms as tt
+        import models
+        import json
+        import random
+
+        self.Image = Image
+        self.ImageFont = ImageFont
+        self.ImageDraw = ImageDraw
+        self.os = os
+        self.argparse = argparse
+        self.cv2 = cv2
+        self.np = np
+        self.torch = torch
+        self.nn = nn
+        self.F = F
+        self.tt = tt
+        self.models = models
+        self.json = json
+        self.random = random
+
+        self.lb = ""
+        self.class_labels = ['기쁨', '당황', '분노', '불안', '상처', '슬픔', '중립']
+        self.class_labels_dict = {'기쁨': 0, '당황': 1, '분노': 2,
+                     '불안': 3, '상처': 4, '슬픔': 5, '중립': 6}
+        self.face_classifier = cv2.CascadeClassifier('face_classifier.xml')
+        self.display_color = (246, 189, 86)
+
+        f=open("letters.json", "r", encoding="utf-8")
+        self.letter = json.load(f)
+        f.close()
+
+
+        pass
+
+    def get_letter(self):
+        if self.lb == "":
+            return " "
+        
+        return self.letter[self.lb][self.random.randint(0, len(self.letter[self.lb])-1)]
+
+    def main(self):
+        model_state = self.torch.load("model.pth", map_location=self.torch.device("cpu"))
+        model = self.models.getModel("emotionnet")
+        model.load_state_dict(model_state['model'])
+
+        cap = self.cv2.VideoCapture(0)
+
+        while True:
+            ret, frame = cap.read()
+            self.lb_status = False
+            frame = self.cv2.flip(frame, 1)
+            gray = self.cv2.cvtColor(frame, self.cv2.COLOR_BGR2GRAY)
+            faces = self.face_classifier.detectMultiScale(gray, 1.3, 5)
+
+            for (x, y, w, h) in faces:
+                self.cv2.rectangle(frame, (x, y), (x+w, y+h), self.display_color, 2)
+                roi_gray = gray[y:y+h, x:x+w]
+                roi_gray = self.cv2.resize(roi_gray, (48, 48),
+                                    interpolation=self.cv2.INTER_AREA)
+
+                if self.np.sum([roi_gray]) != 0:
+                    roi = self.tt.functional.to_pil_image(roi_gray)
+                    roi = self.tt.functional.to_grayscale(roi)
+                    roi = self.tt.ToTensor()(roi).unsqueeze(0)
+
+                    # make a prediction on the ROI
+                    tensor = model(roi)
+                    probs = self.torch.exp(tensor).detach().numpy()
+                    prob = self.np.max(probs) * 100
+                    pred = self.torch.max(tensor, dim=1)[1].tolist()
+                    
+                    self.lb = self.class_labels[pred[0]]
+                    self.lb_status = True
+            
+            if self.lb_status == False:
+                self.lb = ""
+            #print(self.lb)
+
+        cap.release()
+        cv2.destroyAllWindows()
+
+    def softmax(self, x):
+        e_x = self.np.exp(x - self.np.max(x))
+        return e_x / e_x.sum()
+
+
+
+
+
+from flask import *
+from flask_compress import Compress
+import time
+from threading import Thread
+import os
+import json
+
+
+# Move workdirectory to server/
+# get now dir
+now_dir = os.getcwd()
+if "server" not in now_dir:
+    os.chdir("server")
+
+compress = Compress()
+app = Flask(__name__)
+app.secret_key = os.urandom(12)
+m = maneger()
+
+
+@app.route('/')
+def root():
+    rtn = {}
+    rtn.update({"emotion": m.lb})
+    rtn.update({"letter": m.get_letter()})
+    # dump with utf-8
+    return json.dumps(rtn, ensure_ascii=False)
+
+if __name__ == '__main__':
+    Thread(target=m.main).start()
+    app.debug = True
+    app.run(host="0.0.0.0", threaded=True, port=80, use_reloader=False)
