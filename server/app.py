@@ -63,7 +63,7 @@ class maneger():
         cap = self.cv2.VideoCapture(0)
 
         while True:
-            print("COUNT:", self.count, "TM: ", self.tm, "LT: ", self.lt, "LB: ", self.lb, "PIN: ", self.pin, "LB_STATUS: ", self.lb_status)
+            #print("COUNT:", self.count, "TM: ", self.tm, "LT: ", self.lt, "LB: ", self.lb, "PIN: ", self.pin, "LB_STATUS: ", self.lb_status)
             if self.lb_status == False:
                 self.count = {"기쁨": 0, "당황": 0, "분노": 0, "불안": 0, "상처": 0, "슬픔": 0, "중립": 0}
                 self.tm = 0
