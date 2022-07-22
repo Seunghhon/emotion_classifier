@@ -1,5 +1,7 @@
 import cv2
+import os
 
+os.system("sudo modprobe bcm2835-v4l2")
 vcap = cv2.VideoCapture(0)
 
 while True:
