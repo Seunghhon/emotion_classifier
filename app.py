@@ -1,6 +1,3 @@
-from cv2 import dft
-
-
 class maneger():
     def __init__(self):
         from PIL import Image, ImageFont, ImageDraw
@@ -145,12 +142,6 @@ from threading import Thread
 import os
 import json
 
-
-# Move workdirectory to server/
-# get now dir
-now_dir = os.getcwd()
-if "server" not in now_dir:
-    os.chdir("server")
 
 compress = Compress()
 app = Flask(__name__)
