@@ -51,7 +51,7 @@ Module.register("compliments", {
 		//	this.updateDom(this.config.fadeSpeed);
 		//}, this.config.updateInterval);
         setInterval(() => {
-            fetch("http://localhost:80/", {method: "GET"})
+            fetch("http://localhost:8000/", {method: "GET"})
             .then(response => {
                 let data = response.json();
                 data.then(data => {
