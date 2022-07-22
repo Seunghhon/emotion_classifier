@@ -60,6 +60,7 @@ var config = {
           },
           remoteFile: "http://localhost:8000/",
           random: false,
+        }
       }
       //{
       //  module: "compliments",
