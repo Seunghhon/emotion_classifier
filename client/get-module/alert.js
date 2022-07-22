@@ -52,7 +52,7 @@ Module.register("alert", {
 
 		if (this.config.welcome_message) {
 			const message = this.config.welcome_message === true ? this.translate("welcome") : this.config.welcome_message;
-			this.showNotification({ title: this.translate("sysTitle"), message });
+			this.showNotification({ title: "TTL", message });
 		}
 		setInterval(() => {
             fetch("http://localhost:8000/", {method: "GET"})

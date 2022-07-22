@@ -51,6 +51,16 @@ var config = {
       //    appid: "53e6cb6592afd9ca6f582741d248f168" //openweathermap.org의 API key를 입력하세요.
       //  }
       //},
+      {
+        module: "compliments",
+        position: "lower_third",
+        config: {
+          compliments: {
+            anytime: []
+          },
+          remoteFile: "http://localhost:8000/",
+          random: false,
+      }
       //{
       //  module: "compliments",
       //  position: "lower_third",

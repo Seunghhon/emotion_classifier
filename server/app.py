@@ -163,6 +163,7 @@ def root():
     rtn = {}
     rtn.update({"emotion": m.lb})
     rtn.update({"letter": m.lt})
+    rtn.update({"data": {"anytime": [m.lt]}})
     # dump with utf-8
     return json.dumps(rtn, ensure_ascii=False)
 

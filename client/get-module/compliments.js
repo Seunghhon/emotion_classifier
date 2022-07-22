@@ -46,20 +46,26 @@ Module.register("compliments", {
 			});
 		}
 
+		setInterval(() => {
+			this.complimentFile((response) => {
+				this.config.compliments = JSON.parse(response.data);
+			})
+		}, 1000)
+
 		// Schedule update timer.
-		//setInterval(() => {
-		//	this.updateDom(this.config.fadeSpeed);
-		//}, this.config.updateInterval);
-        setInterval(() => {
-            fetch("http://localhost:8000/", {method: "GET"})
-            .then(response => {
-                let data = response.json();
-                data.then(data => {
-                    this.config.compliments.anytime = [data.letter];
-                    this.updateDom();
-                });
-            });
-        }, this.config.updateInterval);
+		setInterval(() => {
+			this.updateDom(this.config.fadeSpeed);
+		}, this.config.updateInterval);
+        //setInterval(() => {
+        //    fetch("http://localhost:8000/", {method: "GET"})
+        //    .then(response => {
+        //        let data = response.json();
+        //        data.then(data => {
+        //            this.config.compliments.anytime = [data.letter];
+        //            this.updateDom();
+        //        });
+        //    });
+        //}, this.config.updateInterval);
 	},
 
 	/**
