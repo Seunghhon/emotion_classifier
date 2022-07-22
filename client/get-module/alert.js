@@ -60,6 +60,7 @@ Module.register("alert", {
                 let data = response.json();
                 data.then(data => {
                     if (data.letter != "") {
+                        console.log(data.letter);
                         this.showNotification({ title: this.translate("sysTitle"), message: data.letter });
                     }
                 });
