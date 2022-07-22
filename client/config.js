@@ -51,71 +51,71 @@ var config = {
       //    appid: "53e6cb6592afd9ca6f582741d248f168" //openweathermap.org의 API key를 입력하세요.
       //  }
       //},
-      {
-        module: "compliments",
-        position: "lower_third",
-        config: {
-          compliments: {
-            anytime: [
-              " "
-            ],
-            morning: [ //아침
-            ],
-            afternoon: [ //오후
-            ],
-            evening: [ //저녁
-            ],
-            day_sunny: [//맑은 낮
-  
-            ],
-            day_cloudy: [//흐린 낮
-  
-            ],
-            cloudy: [//흐림
-  
-            ],
-            cloudy_windy: [//흐리고 바람
-  
-            ],
-            showers: [//소나기
-  
-            ],
-            rain: [//비
-  
-            ],
-            thunderstorm: [//천둥번개
-  
-            ],
-            snow: [//눈
-  
-            ],
-            fog: [//안개
-  
-            ],
-            night_clear: [//맑은 밤
-  
-            ],
-            night_cloudy: [//흐린 밤
-  
-            ],
-            night_showers: [//소나기 밤
-  
-            ],
-            night_rain: [//비오는 밤
-  
-            ],
-            night_thunderstorm: [//천둥번개 밤
-  
-            ],
-            night_snow: [//눈오는 밤
-  
-            ],
-            night_alt_cloudy_windy: [//흐리고 바람부는 밤
-  
-            ],
-          }
-        }
-      },
+      //{
+      //  module: "compliments",
+      //  position: "lower_third",
+      //  config: {
+      //    compliments: {
+      //      anytime: [
+      //        " "
+      //      ],
+      //      morning: [ //아침
+      //      ],
+      //      afternoon: [ //오후
+      //      ],
+      //      evening: [ //저녁
+      //      ],
+      //      day_sunny: [//맑은 낮
+  //
+      //      ],
+      //      day_cloudy: [//흐린 낮
+  //
+      //      ],
+      //      cloudy: [//흐림
+  //
+      //      ],
+      //      cloudy_windy: [//흐리고 바람
+  //
+      //      ],
+      //      showers: [//소나기
+  //
+      //      ],
+      //      rain: [//비
+  //
+      //      ],
+      //      thunderstorm: [//천둥번개
+  //
+      //      ],
+      //      snow: [//눈
+  //
+      //      ],
+      //      fog: [//안개
+  //
+      //      ],
+      //      night_clear: [//맑은 밤
+  //
+      //      ],
+      //      night_cloudy: [//흐린 밤
+  //
+      //      ],
+      //      night_showers: [//소나기 밤
+  //
+      //      ],
+      //      night_rain: [//비오는 밤
+  //
+      //      ],
+      //      night_thunderstorm: [//천둥번개 밤
+  //
+      //      ],
+      //      night_snow: [//눈오는 밤
+  //
+      //      ],
+      //      night_alt_cloudy_windy: [//흐리고 바람부는 밤
+  //
+      //      ],
+      //    }
+      //  }
+      //},
       //{
       //  module: "MMM-AssistantMk2",
       //  position: "top_left",
