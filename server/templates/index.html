@@ -1,0 +1,29 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>EmotionSupporter</title>
+</head>
+<body>
+    <div style="background-color: black; margin: 0 auto; align-items: center;">
+        <h3 id="letter"></h3>
+    </div>
+    <script type="text/javascript">
+        function load() {
+            sessionStorage.setItem("req", "false");
+            setInterval(function() {
+                if (sessionStorage.getItem("req") == "false") {
+                    sessionStorage.setItem("req", "true");
+                    fetch("/api").then(function(response) {
+                        let data = response.json();
+                        data.then(function(data) {
+                            document.getElementById("letter").innerHTML = data.letter;
+                            sessionStorage.removeItem("req");
+                        });
+                    });
+                }
+            }, 1000);
+        }
+        window.onload = load;
+    </script>
+</body>
+</html>

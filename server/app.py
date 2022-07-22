@@ -157,13 +157,15 @@ app = Flask(__name__)
 app.secret_key = os.urandom(12)
 m = maneger()
 
-
 @app.route('/')
-def root():
+def index():
+    return render_template('index.html')
+
+@app.route('/api')
+def api():
     rtn = {}
     rtn.update({"emotion": m.lb})
     rtn.update({"letter": m.lt})
-    rtn.update({"data": {"anytime": [m.lt]}})
     # dump with utf-8
     return json.dumps(rtn, ensure_ascii=False)
 
