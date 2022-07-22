@@ -1,112 +1,175 @@
-/* MagicMirror² Config Sample
- *
- * By Michael Teeuw https://michaelteeuw.nl
- * MIT Licensed.
- *
- * For more information on how you can configure this file
- * see https://docs.magicmirror.builders/configuration/introduction.html
- * and https://docs.magicmirror.builders/modules/configuration.html
- */
-let config = {
-	address: "localhost", 	// Address to listen on, can be:
-							// - "localhost", "127.0.0.1", "::1" to listen on loopback interface
-							// - another specific IPv4/6 to listen on a specific interface
-							// - "0.0.0.0", "::" to listen on any interface
-							// Default, when address config is left out or empty, is "localhost"
-	port: 8080,
-	basePath: "/", 	// The URL path where MagicMirror² is hosted. If you are using a Reverse proxy
-					// you must set the sub path here. basePath must end with a /
-	ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"], 	// Set [] to allow all IP addresses
-															// or add a specific IPv4 of 192.168.1.5 :
-															// ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.1.5"],
-															// or IPv4 range of 192.168.3.0 --> 192.168.3.15 use CIDR format :
-															// ["127.0.0.1", "::ffff:127.0.0.1", "::1", "::ffff:192.168.3.0/28"],
-
-	useHttps: false, 		// Support HTTPS or not, default "false" will use HTTP
-	httpsPrivateKey: "", 	// HTTPS private key path, only require when useHttps is true
-	httpsCertificate: "", 	// HTTPS Certificate path, only require when useHttps is true
-
-	language: "en",
-	locale: "en-US",
-	logLevel: ["INFO", "LOG", "WARN", "ERROR"], // Add "DEBUG" for even more logging
-	timeFormat: 24,
-	units: "metric",
-	// serverOnly:  true/false/"local" ,
-	// local for armv6l processors, default
-	//   starts serveronly and then starts chrome browser
-	// false, default for all NON-armv6l devices
-	// true, force serveronly mode, because you want to.. no UI on this device
-
-	modules: [
-		{
-			module: "alert",
-		},
-		{
-			module: "updatenotification",
-			position: "top_bar"
-		},
-		{
-			module: "clock",
-			position: "top_left"
-		},
-		{
-			module: "calendar",
-			header: "US Holidays",
-			position: "top_left",
-			config: {
-				calendars: [
-					{
-						symbol: "calendar-check",
-						url: "webcal://www.calendarlabs.com/ical-calendar/ics/76/US_Holidays.ics"
-					}
-				]
-			}
-		},
-		{
-			module: "compliments",
-			position: "lower_third"
-		},
-		{
-			module: "weather",
-			position: "top_right",
-			config: {
-				weatherProvider: "openweathermap",
-				type: "current",
-				location: "New York",
-				locationID: "5128581", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-				apiKey: "YOUR_OPENWEATHER_API_KEY"
-			}
-		},
-		{
-			module: "weather",
-			position: "top_right",
-			header: "Weather Forecast",
-			config: {
-				weatherProvider: "openweathermap",
-				type: "forecast",
-				location: "New York",
-				locationID: "5128581", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-				apiKey: "YOUR_OPENWEATHER_API_KEY"
-			}
-		},
-		{
-			module: "newsfeed",
-			position: "bottom_bar",
-			config: {
-				feeds: [
-					{
-						title: "New York Times",
-						url: "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
-					}
-				],
-				showSourceTitle: true,
-				showPublishDate: true,
-				broadcastNewsFeeds: true,
-				broadcastNewsUpdates: true
-			}
-		},
-	]
-};
-
-/*************** DO NOT EDIT THE LINE BELOW ***************/
-if (typeof module !== "undefined") {module.exports = config;}
+var config = {
+    address: "localhost",
+    port: 8080,
+    ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"],
+    language: "ko",
+    timeFormat: 12,
+    units: "metric",
+  
+    modules: [
+      {
+        module: "alert",
+      },
+      {
+        module: "updatenotification",
+        position: "top_bar"
+      },
+      {
+        module: "clock",
+        position: "top_left",
+        config: {
+          dateFormat: "LL dddd",
+        }
+      },
+      {
+        module: "calendar",
+        position: "top_left",
+        config: {
+          urgency: 21,
+          fetchInterval: 3600000,
+          calendars: [{
+            url: 'https://calendar.google.com/calendar/ical/ko.south_korea%23holiday%40group.v.calendar.google.com/public/basic.ics',
+            symbol: '대한민국 공휴일',
+          }]
+        }
+      },
+      {
+        module: "currentweather",
+        position: "top_right",
+        config: {
+          location: "Incheon, KR", //https://openweathermap.org/ 에서 지역을 찾으세요.
+          locationID: "",
+          appid: "53e6cb6592afd9ca6f582741d248f168" //openweathermap.org의 API key를 입력하세요.
+        }
+      },
+      {
+        module: "weatherforecast",
+        position: "top_right",
+        config: {
+          location: "Incheon, KR", //https://openweathermap.org/ 에서 지역을 찾으세요.
+          locationID: "",
+          appid: "53e6cb6592afd9ca6f582741d248f168" //openweathermap.org의 API key를 입력하세요.
+        }
+      },
+      {
+        module: "compliments",
+        position: "lower_third",
+        config: {
+          compliments: {
+            anytime: [ //아무때나
+              "오늘도 좋은 하루!"
+            ],
+            morning: [ //아침
+              "좋은 아침!",
+              "힘찬 아침!",
+              "잘 잤나요?"
+            ],
+            afternoon: [ //오후
+              "안녕하세요!",
+              "멋져요!",
+              "잘 지내고 있나요!"
+            ],
+            evening: [ //저녁
+              "와우! 잘 지냈나요?",
+              "멋져보이네요!",
+              "반가워요!"
+            ],
+            day_sunny: [//맑은 낮
+  
+            ],
+            day_cloudy: [//흐린 낮
+  
+            ],
+            cloudy: [//흐림
+  
+            ],
+            cloudy_windy: [//흐리고 바람
+  
+            ],
+            showers: [//소나기
+  
+            ],
+            rain: [//비
+  
+            ],
+            thunderstorm: [//천둥번개
+  
+            ],
+            snow: [//눈
+  
+            ],
+            fog: [//안개
+  
+            ],
+            night_clear: [//맑은 밤
+  
+            ],
+            night_cloudy: [//흐린 밤
+  
+            ],
+            night_showers: [//소나기 밤
+  
+            ],
+            night_rain: [//비오는 밤
+  
+            ],
+            night_thunderstorm: [//천둥번개 밤
+  
+            ],
+            night_snow: [//눈오는 밤
+  
+            ],
+            night_alt_cloudy_windy: [//흐리고 바람부는 밤
+  
+            ],
+          }
+        }
+      },
+      {
+        module: "MMM-AssistantMk2",
+        position: "top_left",
+        config: {
+          ui: "Fullscreen",
+          assistantConfig: {
+            latitude: 37.57,
+            longitude: 126.98
+          },
+          micConfig: {
+            recoder : "arecord",  
+            device  : "plughw:1",
+          },
+          recipes: [ 
+            "with-MMM-Hotword.js",
+            "with-MMM-Youtube.js",
+            ],
+          profiles: {
+            "default": {
+              lang: "ko-KR"
+            }
+          },
+          addons: false,
+        }
+      },
+      {
+        module: "MMM-YouTube",
+        position: "top_right"
+      },
+      {
+        module: "MMM-Hotword",
+        position: "top_center",
+        config: {
+          chimeOnFinish: null,
+          recipes: [ "with-AMk2v3_smart-mirror.js" ],
+          mic: {
+            recordProgram: "arecord",
+            device: "plughw:1"
+          }
+        }
+      },
+    ]
+  };
+  
+  /*************** DO NOT EDIT THE LINE BELOW ***************/
+  if (typeof module !== "undefined") {
+    module.exports = config;
+  }
