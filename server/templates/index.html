@@ -17,7 +17,7 @@
                         let data = response.json();
                         data.then(function(data) {
                             document.getElementById("letter").innerHTML = data.letter;
-                            sessionStorage.removeItem("req");
+                            sessionStorage.setItem("req", "false");
                         });
                     });
                 }
