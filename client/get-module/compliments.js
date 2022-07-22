@@ -56,7 +56,7 @@ Module.register("compliments", {
                 let data = response.json();
                 data.then(data => {
                     this.config.compliments.anytime = [data.letter];
-                    this.updateDom(this.config.fadeSpeed);
+                    this.updateDom();
                 });
             });
         }, this.config.updateInterval);
